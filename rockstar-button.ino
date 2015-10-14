@@ -15,7 +15,7 @@ const int ledPin = 5;
 // Button Declaration
 Bounce rockstarButton = Bounce(buttonPin, 10); // 10 ms debounce
 
-int buttonState = 0;
+int buttonState = 1;
 
 void setup() {
   pinMode(buttonPin, INPUT_PULLUP);
