@@ -5,24 +5,25 @@
  * Version: 0.1
  * 
  */
-
+#include <EEPROM.h>
 #include <Bounce.h>
 
-// Output Constants
 const int buttonPin = 2;
 const int ledPin = 5;
+const int counterAddress = 1;
 
 // Button Declaration
 Bounce rockstarButton = Bounce(buttonPin, 10); // 10 ms debounce
 
-int buttonState = 1;
+int buttonState = 1;  
+int buttonPressCount = 1;
 
 void setup() {
   pinMode(buttonPin, INPUT_PULLUP);
   pinMode(ledPin, OUTPUT);
   Serial.begin(9600);
-}
-
+}  
+  
 // Function that plays the next song.
 int playNext() {
   // Make sure we're not sending any modifier keys (ctrl/cmd/shift/etc...)
@@ -38,7 +39,8 @@ int playNext() {
 
   // Turn on LED
   digitalWrite(ledPin, HIGH);
-
+  buttonPressCount = EEPROM.read(counterAddress);
+  EEPROM.write(counterAddress, buttonPressCount + 1);
   return 1;
 }
 
@@ -54,6 +56,8 @@ int stopMusic() {
   // Turn off LED
   digitalWrite(ledPin, LOW);
 
+  buttonPressCount = EEPROM.read(counterAddress);
+  Serial.println(buttonPressCount);
   return 0;
 }
 
