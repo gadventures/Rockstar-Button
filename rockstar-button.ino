@@ -1,8 +1,9 @@
 /*
  * Rockstar Button
- * Description: The code that runs the Rockstar Button at G Adventures
+ * Description: The code that runs the Rockstar Button at G Adventures.
+ *              This sends keyboard shortcuts to Spotify to play music
  * Author(s): Adam McKerlie
- * Version: 0.1
+ * Version: 0.2
  * 
  */
 
@@ -25,16 +26,13 @@ void setup() {
 
 // Function that plays the next song.
 int playNext() {
-  // Make sure we're not sending any modifier keys (ctrl/cmd/shift/etc...)
-  Keyboard.set_modifier(0);
+  //We want to send ALT+Right to skip to the next song in Spotify
+  Keyboard.set_modifier(MODIFIERKEY_ALT);
+  Keyboard.send_now();
 
   // Skip to the next song
   Keyboard.set_key1(KEY_RIGHT);
   Keyboard.send_now(); 
-
-  // Play music
-  Keyboard.set_key1(KEY_SPACE);
-  Keyboard.send_now();
 
   // Turn on LED
   digitalWrite(ledPin, HIGH);
